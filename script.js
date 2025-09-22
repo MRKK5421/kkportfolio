@@ -1,43 +1,56 @@
 // ===============================
-// Animate Skills Bars
+// Animate Skills Bars on Scroll
 // ===============================
 const skillBars = document.querySelectorAll(".bar-fill");
 
 function animateSkills() {
   skillBars.forEach(bar => {
-    const width = bar.getAttribute("data-width");
-    bar.style.width = width;
+    const rect = bar.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      bar.style.width = bar.dataset.width;
+    }
   });
 }
 
-// Optional: animate when page loads
-document.addEventListener("DOMContentLoaded", animateSkills);
+window.addEventListener("scroll", animateSkills);
+window.addEventListener("load", animateSkills);
 
-// Optional: animate when skills section scrolls into view
-const skillsSection = document.getElementById("skills");
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateSkills();
-      observer.unobserve(skillsSection); // Only animate once
-    }
-  });
-}, { threshold: 0.5 });
+// ===============================
+// Typing Animation in Hero Section
+// ===============================
+const typingText = document.querySelector(".typing-text");
+const words = ["Web Apps", "APIs", "Backend Systems", "Full-Stack Projects"];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
 
-observer.observe(skillsSection);
-// Auto update current year in footer
-document.addEventListener("DOMContentLoaded", () => {
-  const year = new Date().getFullYear();
-  const footerText = document.querySelector("footer p");
-  if (footerText) {
-    footerText.textContent = `© ${year} Karunakar Komarthi. All rights reserved.`;
+function typeEffect() {
+  const currentWord = words[wordIndex];
+  if (isDeleting) {
+    typingText.textContent = currentWord.substring(0, charIndex--);
+  } else {
+    typingText.textContent = currentWord.substring(0, charIndex++);
   }
-});
 
-// Scroll To Top Button
+  if (!isDeleting && charIndex === currentWord.length) {
+    isDeleting = true;
+    setTimeout(typeEffect, 1500); // Pause before deleting
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    wordIndex = (wordIndex + 1) % words.length;
+    setTimeout(typeEffect, 500); // Pause before typing next word
+  } else {
+    setTimeout(typeEffect, isDeleting ? 50 : 120);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", typeEffect);
+
+// ===============================
+// Scroll to Top Button
+// ===============================
 const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-// Show button when user scrolls down 300px
 window.addEventListener("scroll", () => {
   if (window.scrollY > 300) {
     scrollTopBtn.style.display = "block";
@@ -46,24 +59,9 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// Scroll smoothly to top on click
 scrollTopBtn.addEventListener("click", () => {
   window.scrollTo({
     top: 0,
-    behavior: "smooth"
-  });
-});
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const items = document.querySelectorAll("#about ul li");
-  items.forEach((item, index) => {
-    item.style.opacity = 0;
-    item.style.transform = "translateY(20px)";
-    setTimeout(() => {
-      item.style.transition = "all 0.6s ease-out";
-      item.style.opacity = 1;
-      item.style.transform = "translateY(0)";
-    }, index * 150);
+    behavior: "smooth",
   });
 });
