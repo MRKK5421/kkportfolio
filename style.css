@@ -443,3 +443,96 @@ footer .footer-social a:hover {
   border-radius: 1rem; /* optional: rounded corners */
   object-fit: cover;
 }
+
+
+/* ============================= */
+/* 📱 Responsive Design Fixes */
+/* ============================= */
+
+/* Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr; /* stack image + content */
+    text-align: center;
+  }
+
+  .hero-image {
+    order: -1; /* show image first */
+  }
+
+  .hero-content {
+    margin-top: 1.5rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobiles (<= 768px) */
+@media (max-width: 768px) {
+  #hero {
+    padding: 3rem 1rem;
+  }
+
+  .hero-name {
+    font-size: 2rem;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-img {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Small Mobiles (<= 480px) */
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: 1.6rem;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  form input,
+  form textarea {
+    font-size: 0.9rem;
+  }
+}
+
